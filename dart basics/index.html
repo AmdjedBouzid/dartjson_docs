@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dart Basics Documentation</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Dart Programming Basics</h1>
+            <p>A comprehensive guide covering Dart syntax, null safety, data types, I/O operations, and Object-Oriented Programming (OOP) concepts.</p>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="#1-introduction">1. Introduction</a></li>
+                <li><a href="#2-dart-code-structure">2. Dart Code Structure</a></li>
+                <li><a href="#3-data-types">3. Data Types</a></li>
+                <li><a href="#4-null-safety">4. Null Safety</a></li>
+                <li><a href="#5-operations">5. Operations</a></li>
+                <li><a href="#6-io-operations">6. I/O Operations</a></li>
+                <li><a href="#7-object-oriented-programming">7. Object-Oriented Programming (OOP)</a></li>
+                <li><a href="#8-conclusion">8. Conclusion</a></li>
+            </ul>
+        </nav>
+
+        <section id="1-introduction">
+            <h2>1. Introduction</h2>
+            <p>Dart is a client-optimized language designed for building mobile, desktop, and web applications. It is the language used for Flutter development. This guide will take you through Dart's basic syntax, data types, null safety, operations, I/O operations, and object-oriented programming features.</p>
+        </section>
+
+        <section id="2-dart-code-structure">
+            <h2>2. Dart Code Structure</h2>
+            <p>Dart code typically starts with a <code>main()</code> function, which is the entry point of every Dart application. Dart uses curly braces (<code>{}</code>) for code blocks.</p>
+            <pre><code>void main() {
+  print('Hello, Dart!');
+}</code></pre>
+            <p>The structure of a Dart program includes:</p>
+            <ul>
+                <li>Importing libraries</li>
+                <li>Defining variables</li>
+                <li>Writing functions</li>
+                <li>Class definitions</li>
+            </ul>
+        </section>
+
+        <section id="3-data-types">
+            <h2>3. Data Types</h2>
+            <p>Dart supports a rich set of data types that can be categorized into:</p>
+            <ul>
+                <li><strong>Numbers</strong> (int, double)</li>
+                <li><strong>Strings</strong></li>
+                <li><strong>Booleans</strong></li>
+                <li><strong>Lists</strong> (arrays)</li>
+                <li><strong>Maps</strong> (key-value pairs)</li>
+                <li><strong>Sets</strong> (unique collections of objects)</li>
+            </ul>
+            <h3>Example</h3>
+            <pre><code>int age = 30;
+double height = 5.9;
+String name = 'John';
+bool isStudent = true;
+List<String> students = ['John', 'Alice', 'Bob'];
+Map<String, int> grades = {'Math': 90, 'Science': 85};</code></pre>
+        </section>
+
+        <section id="4-null-safety">
+            <h2>4. Null Safety</h2>
+            <p>Null safety helps prevent errors caused by null values. In Dart, a variable cannot contain a null value unless explicitly declared as nullable using the <code>? </code> operator.</p>
+            <pre><code>String? name;  // Nullable string
+name = 'John'; // Valid
+name = null;    // Valid</code></pre>
+            <p>To ensure safety, Dart forces checks to ensure that you do not access nullable variables unless they are properly checked for null.</p>
+        </section>
+
+        <section id="5-operations">
+            <h2>5. Operations</h2>
+            <p>Dart supports various operations, including arithmetic, relational, logical, and assignment operations:</p>
+            <h3>Arithmetic Operations</h3>
+            <pre><code>int sum = 5 + 3;   // Addition
+int diff = 5 - 3;  // Subtraction
+int prod = 5 * 3;  // Multiplication
+double div = 5 / 2; // Division</code></pre>
+            <h3>Relational Operations</h3>
+            <pre><code>bool isEqual = 5 == 3;  // Equality check
+bool isGreater = 5 > 3;  // Greater than check</code></pre>
+            <h3>Logical Operations</h3>
+            <pre><code>bool and = true && false;  // Logical AND
+bool or = true || false;    // Logical OR</code></pre>
+        </section>
+
+        <section id="6-io-operations">
+            <h2>6. I/O Operations</h2>
+            <p>Dart provides libraries for performing input and output (I/O) operations, such as reading from and writing to the console or files.</p>
+            <h3>Console I/O</h3>
+            <pre><code>import 'dart:io';
+
+void main() {
+  stdout.write('Enter your name: ');
+  String? name = stdin.readLineSync();
+  print('Hello, $name!');
+}</code></pre>
+            <p>The code above demonstrates how to read user input from the console and print a message to the screen.</p>
+            <h3>File I/O</h3>
+            <pre><code>import 'dart:io';
+
+void main() async {
+  File file = File('example.txt');
+  await file.writeAsString('Hello, Dart!');
+  String contents = await file.readAsString();
+  print(contents);  // Output: Hello, Dart!
+}</code></pre>
+        </section>
+
+        <section id="7-object-oriented-programming">
+            <h2>7. Object-Oriented Programming (OOP)</h2>
+            <p>Dart is an object-oriented programming language that supports classes, inheritance, interfaces, and more.</p>
+            <h3>Classes and Objects</h3>
+            <pre><code>class Person {
+  String name;
+  int age;
+
+  Person(this.name, this.age);
+
+  void greet() {
+    print('Hello, my name is $name and I am $age years old.');
+  }
+}
+
+void main() {
+  Person person = Person('John', 30);
+  person.greet();
+}</code></pre>
+            <h3>Constructors</h3>
+            <pre><code>class Animal {
+  String name;
+
+  Animal(this.name);  // Constructor
+
+  void speak() {
+    print('$name makes a sound.');
+  }
+}</code></pre>
+            <h3>Inheritance</h3>
+            <pre><code>class Dog extends Animal {
+  Dog(String name) : super(name);
+
+  @override
+  void speak() {
+    print('$name barks.');
+  }
+}
+
+void main() {
+  Dog dog = Dog('Rex');
+  dog.speak();  // Output: Rex barks.
+}</code></pre>
+        </section>
+
+        <section id="8-conclusion">
+            <h2>8. Conclusion</h2>
+            <p>Dart is a powerful, easy-to-learn language that provides modern features like null safety and a rich set of data types. It supports object-oriented programming principles and is widely used for mobile development with Flutter. This documentation has covered Dart's basic syntax, operations, and object-oriented features. By understanding these concepts, you can build more robust applications using Dart.</p>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

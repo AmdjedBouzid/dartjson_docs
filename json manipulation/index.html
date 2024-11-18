@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON in Dart Documentation</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Working with JSON in Dart</h1>
+            <p>This guide covers how to work with JSON in Dart, including encoding and decoding JSON, handling custom classes, and working with JSON data in files.</p>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="#1-introduction">1. Introduction</a></li>
+                <li><a href="#2-dart-basics">2. Dart Basics</a></li>
+                <li><a href="#3-oop-with-dart">3. OOP with Dart</a></li>
+                <li><a href="#4-importing-the-required-library">4. Importing the Required Library</a></li>
+                <li><a href="#5-json-encoding-and-decoding">5. JSON Encoding and Decoding</a></li>
+                <li><a href="#6-working-with-json-objects">6. Working with JSON Objects</a></li>
+                <li><a href="#7-serialization-and-deserialization-with-custom-classes">7. Serialization and Deserialization</a></li>
+                <li><a href="#8-handling-json-with-file-io">8. Handling JSON with File I/O</a></li>
+                <li><a href="#9-real-world-json-manipulation-example">9. Real-World JSON Manipulation Example</a></li>
+                <li><a href="#10-conclusion">10. Conclusion</a></li>
+            </ul>
+        </nav>
+
+        <section id="1-introduction">
+            <h2>1. Introduction</h2>
+            <p>JSON (JavaScript Object Notation) is a lightweight data-interchange format that is easy for humans to read and write. Dart provides built-in support for encoding and decoding JSON data. This documentation will help you understand how to work with JSON data in Dart, from basic encoding and decoding to advanced operations like serialization and file handling.</p>
+        </section>
+
+        <section id="2-dart-basics">
+            <h2>2. Dart Basics</h2>
+            <p>Dart is an object-oriented programming language developed by Google. It is used for building web, mobile, and server-side applications. Here are some basic Dart concepts:</p>
+
+            <h3>2.1 Variables and Data Types</h3>
+            <p>In Dart, you declare variables using the <code>var</code>, <code>final</code>, or <code>const</code> keywords:</p>
+            <pre><code>var name = 'John Doe'; // String
+final age = 30;  // int
+const pi = 3.14;  // double</code></pre>
+
+            <h3>2.2 Control Structures</h3>
+            <p>Dart supports traditional control structures like <code>if</code>, <code>for</code>, <code>while</code>, and <code>switch</code>:</p>
+            <pre><code>if (age >= 18) {
+  print('Adult');
+} else {
+  print('Minor');
+}</code></pre>
+
+            <h3>2.3 Functions</h3>
+            <p>You can define functions using the <code>void</code> or return type:</p>
+            <pre><code>void greet(String name) {
+  print('Hello, $name!');
+}</code></pre>
+        </section>
+
+        <section id="3-oop-with-dart">
+            <h2>3. OOP with Dart</h2>
+            <p>Dart is an object-oriented language, which means it supports concepts like classes, inheritance, and polymorphism. Here's an overview of some key OOP features:</p>
+
+            <h3>3.1 Classes and Objects</h3>
+            <p>Classes are blueprints for creating objects. You define a class using the <code>class</code> keyword:</p>
+            <pre><code>class Person {
+  String name;
+  int age;
+
+  // Constructor
+  Person(this.name, this.age);
+
+  void introduce() {
+    print('My name is $name and I am $age years old.');
+  }
+}
+
+// Creating an object of the class
+Person person = Person('John Doe', 30);
+person.introduce();  // Output: My name is John Doe and I am 30 years old.</code></pre>
+
+            <h3>3.2 Inheritance</h3>
+            <p>In Dart, a class can inherit from another class. The subclass inherits the properties and methods of the parent class:</p>
+            <pre><code>class Student extends Person {
+  String school;
+
+  Student(String name, int age, this.school) : super(name, age);
+
+  void introduce() {
+    print('I am $name, a $age-year-old student at $school.');
+  }
+}
+
+Student student = Student('Alice', 22, 'University');
+student.introduce();  // Output: I am Alice, a 22-year-old student at University.</code></pre>
+
+            <h3>3.3 Polymorphism</h3>
+            <p>Polymorphism allows objects to be treated as instances of their parent class. You can override methods in subclasses to provide custom behavior:</p>
+            <pre><code>class Animal {
+  void speak() {
+    print('Animal speaks');
+  }
+}
+
+class Dog extends Animal {
+  @override
+  void speak() {
+    print('Woof! Woof!');
+  }
+}
+
+Animal animal = Dog();
+animal.speak();  // Output: Woof! Woof!</code></pre>
+        </section>
+
+        <section id="4-importing-the-required-library">
+            <h2>4. Importing the Required Library</h2>
+            <p>To work with JSON in Dart, you need to import the <code>dart:convert</code> library, which provides methods for encoding and decoding JSON.</p>
+            <pre><code>import 'dart:convert';</code></pre>
+        </section>
+
+        <section id="5-json-encoding-and-decoding">
+            <h2>5. JSON Encoding and Decoding</h2>
+            <h3>5.1 Encoding JSON</h3>
+            <p>To convert Dart objects into JSON format, you use the <code>jsonEncode()</code> function:</p>
+            <pre><code>import 'dart:convert';
+
+Map<String, dynamic> user = {
+  'name': 'John Doe',
+  'age': 30,
+  'email': 'john@example.com'
+};
+
+String jsonString = jsonEncode(user);
+print(jsonString);  // Output: {"name":"John Doe","age":30,"email":"john@example.com"}</code></pre>
+
+            <h3>5.2 Decoding JSON</h3>
+            <p>To convert JSON into Dart objects, use the <code>jsonDecode()</code> function:</p>
+            <pre><code>import 'dart:convert';
+
+String jsonString = '{"name": "John Doe", "age": 30, "email": "john@example.com"}';
+Map<String, dynamic> user = jsonDecode(jsonString);
+
+print(user['name']);  // Output: John Doe</code></pre>
+        </section>
+
+        <section id="6-working-with-json-objects">
+            <h2>6. Working with JSON Objects</h2>
+            <p>JSON objects in Dart are typically represented as <code>Map<String, dynamic></code>. You can access the properties of these objects just like you would with any other map in Dart:</p>
+            <pre><code>Map<String, dynamic> user = jsonDecode(jsonString);
+print(user['name']);  // Output: John Doe</code></pre>
+        </section>
+
+        <section id="7-serialization-and-deserialization-with-custom-classes">
+            <h2>7. Serialization and Deserialization</h2>
+            <p>When working with custom Dart classes, you can implement your own serialization and deserialization logic to convert your objects to and from JSON.</p>
+            <pre><code>class User {
+  String name;
+  int age;
+  String email;
+
+  User({required this.name, required this.age, required this.email});
+
+  // Convert a User instance to a Map (for encoding)
+  Map<String, dynamic> toJson() => {
+    'name': name,
+    'age': age,
+    'email': email,
+  };
+
+  // Convert a Map to a User instance (for decoding)
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      name: json['name'],
+      age: json['age'],
+      email: json['email'],
+    );
+  }
+}
+
+// Usage:
+User user = User(name: 'John Doe', age: 30, email: 'john@example.com');
+String jsonString = jsonEncode(user.toJson());
+print(jsonString);  // {"name":"John Doe","age":30,"email":"john@example.com"}
+
+Map<String, dynamic> decodedJson = jsonDecode(jsonString);
+User decodedUser = User.fromJson(decodedJson);
+print(decodedUser.name);  // John Doe</code></pre>
+        </section>
+
+        <section id="8-handling-json-with-file-io">
+            <h2>8. Handling JSON with File I/O</h2>
+            <p>Dart provides the <code>dart:io</code> library for handling files. You can read and write JSON to a file using the <code>File</code> class.</p>
+            <pre><code>import 'dart:convert';  // For JSON encoding/decoding
+import 'dart:io';  // For file operations
+
+// Create a function to read and manipulate JSON data
+Future<void> readAndUpdateJson() async {
+  // Read the JSON file
+  File file = File('users.json');
+  String jsonString = await file.readAsString();
+  
+  // Decode the JSON string into a List of Maps
+  List<dynamic> users = jsonDecode(jsonString);
+
+  // Manipulate the data - let's update Bob's age
+  users[2]['age'] = 41;  // Update age for the user with ID 3
+
+  // Add a new user to the list
+  users.add({
+    'id': 4,
+    'name': 'David Lee',
+    'age': 29,
+    'email': 'david@example.com'
+  });
+
+  // Encode the updated data back to JSON
+  String updatedJson = jsonEncode(users);
+
+  // Write the updated JSON to the file
+  await file.writeAsString(updatedJson);
+
+  print('JSON updated successfully!');
+}
+
+// Call the function to read and update JSON data
+readAndUpdateJson();</code></pre>
+        </section>
+
+        <section id="9-real-world-json-manipulation-example">
+            <h2>9. Real-World JSON Manipulation Example</h2>
+            <p>Here’s a real-world JSON file and how it’s manipulated in Dart. Consider the following <code>users.json</code> file:</p>
+
+            <h3>9.1 Original JSON File (users.json)</h3>
+            <pre><code>[
+    {
+        "id": 1,
+        "name": "John Doe",
+        "age": 30,
+        "email": "john@example.com"
+    },
+    {
+        "id": 2,
+        "name": "Alice Smith",
+        "age": 25,
+        "email": "alice@example.com"
+    },
+    {
+        "id": 3,
+        "name": "Bob Brown",
+        "age": 40,
+        "email": "bob@example.com"
+    }
+]</code></pre>
+
+            <h3>9.2 After Manipulation (users.json)</h3>
+            <pre><code>[
+    {
+        "id": 1,
+        "name": "John Doe",
+        "age": 30,
+        "email": "john@example.com"
+    },
+    {
+        "id": 2,
+        "name": "Alice Smith",
+        "age": 25,
+        "email": "alice@example.com"
+    },
+    {
+        "id": 3,
+        "name": "Bob Brown",
+        "age": 41,
+        "email": "bob@example.com"
+    },
+    {
+        "id": 4,
+        "name": "David Lee",
+        "age": 29,
+        "email": "david@example.com"
+    }
+]</code></pre>
+
+            <h3>9.3 Code Example for Manipulation</h3>
+            <pre><code>import 'dart:convert';
+import 'dart:io';
+
+Future<void> manipulateJson() async {
+  File file = File('users.json');
+  String jsonString = await file.readAsString();
+  List<dynamic> users = jsonDecode(jsonString);
+
+  // Update Bob's age
+  users[2]['age'] = 41;
+  
+  // Add a new user
+  users.add({
+    'id': 4,
+    'name': 'David Lee',
+    'age': 29,
+    'email': 'david@example.com'
+  });
+
+  String updatedJson = jsonEncode(users);
+  await file.writeAsString(updatedJson);
+  print('JSON updated!');
+}
+
+manipulateJson();</code></pre>
+        </section>
+
+        <section id="10-conclusion">
+            <h2>10. Conclusion</h2>
+            <p>This guide provided an overview of working with JSON in Dart. You learned how to decode and encode JSON strings, deserialize nested JSON, handle null values, and work with custom Dart classes. Additionally, you explored how to read and write JSON from/to files and perform operations on the data, such as updating fields and adding new entries.</p>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
